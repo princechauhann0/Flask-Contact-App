@@ -1,0 +1,14 @@
+{
+    "params":
+    {
+        "local_server":"True",
+        "local_uri":"add-your-local-uri",
+        "production_uri":"add-your-productionuri",
+        "tw_url":"add-twitter-url",
+        "Fb_url":"add-facebook-url",
+        "gh_url":"add-git-url",
+        "blog_name":"enter-your-blog-name",
+        "gmail-username":"enter-your-email",
+        "gmail-password":"enter-your-password"
+    }
+}

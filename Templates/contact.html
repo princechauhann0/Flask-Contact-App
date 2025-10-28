@@ -1,0 +1,143 @@
+{% extends "layout.html" %}  <!--This is used to link this with layout.html so the we can take the comman part of each file from there-->
+{% block body %}
+
+
+<!-- Success Modal -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title" id="successModalLabel">Success</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {{ message }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        // Show the modal automatically when the page loads
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'))
+        successModal.show()
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{ url_for('static' , filename = 'assets/img/contact-bg.jpg')}} ')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1>Contact Me</h1>
+                            <span class="subheading">Have questions? I have answers.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
+                        <div class="my-5">
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- * * SB Forms Contact Form * *-->
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- This form is pre-integrated with SB Forms.-->
+                            <!-- To make this form functional, sign up at-->
+                            <!-- https://startbootstrap.com/solution/contact-forms-->
+                            <!-- to get an API token!-->
+                            <form id="contactForm" action="/contact" method="POST">
+                                <div class="form-floating">
+                                    <input class="form-control" id="name" name = "name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                    <label for="name">Name</label>
+                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="email" name = "email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
+                                    <label for="email">Email address</label>
+                                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" name = "phone" id="phone" type="tel" placeholder="Enter your phone number..." data-sb-validations="required" />
+                                    <label for="phone">Phone Number</label>
+                                    <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <textarea class="form-control" name = "message" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                                    <label for="message">Message</label>
+                                    <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                </div>
+                                <br />
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Send</button>
+                            </form>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" id="feedbackHeader">
+        <h5 class="modal-title" id="feedbackModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="feedbackBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="feedbackBtn" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if get_flashed_messages() %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const messages = {{ get_flashed_messages(with_categories=true) | tojson }};
+    if (messages.length > 0) {
+        const category = messages[0][0]; // success or error
+        const message = messages[0][1];
+
+        const feedbackHeader = document.getElementById('feedbackHeader');
+        const feedbackBody = document.getElementById('feedbackBody');
+        const feedbackBtn = document.getElementById('feedbackBtn');
+
+        if(category === 'success'){
+            feedbackHeader.classList.add('bg-success', 'text-white');
+            feedbackBtn.classList.add('btn-success');
+            document.getElementById('feedbackModalLabel').innerText = "Success";
+        } else {
+            feedbackHeader.classList.add('bg-danger', 'text-white');
+            feedbackBtn.classList.add('btn-danger');
+            document.getElementById('feedbackModalLabel').innerText = "Error";
+        }
+
+        feedbackBody.innerText = message;
+
+        // Trigger Bootstrap modal
+        const modal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+        modal.show();
+    }
+});
+</script>
+{% endif %}
+
+
+        {% endblock %} 
