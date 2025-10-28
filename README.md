@@ -1,2 +1,15 @@
 # Flask-Contact-App
-This is a Flask web application that is a basic blog and contact site. It has several static pages (Home, About, Post, and Contact) and a working contact form that saves messages from the users into a database and sends them to the admin's email box using Flask-Mail
+
+A simple Flask application that serves a small blog-like site (index/post/about/contact) and saves contact form submissions to a database while sending an email notification. Built with Flask, SQLAlchemy and Flask-Mail.
+
+## Features
+- Static pages: Home, Post, About
+- Contact form that:
+  - Stores submissions in a SQL database (SQLite by default)
+  - Sends an email to the site owner with the message
+- Config-driven (via `config.json` + environment variables)
+- Easy to run locally
+
+## Demo
+This repo does not include a hosted demo. Run locally to test.
+
